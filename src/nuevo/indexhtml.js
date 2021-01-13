@@ -12,7 +12,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 var latlang;
+var lugar;
 var localizaciones = [];
+var listaPreguntas = [];
 
 var placesAutocomplete = places({
   appId: 'plOJC0RKIYMV',
@@ -22,6 +24,7 @@ var placesAutocomplete = places({
     value: function(suggestion) {
         map.setView([suggestion.latlng.lat,suggestion.latlng.lng],15);
         latlang = suggestion;
+        lugar = suggestion.name;
     }
   },
   });
@@ -38,6 +41,12 @@ var placesAutocomplete = places({
     .bindPopup('Localizacion '+(i+1))
     .openPopup();
     }
+
+    var option = document.createElement("option");
+    option.text = lugar;
+    option.value = lugar;
+    var select = document.getElementById("localizacionPregunta");
+    select.appendChild(option);
     
   }
 
@@ -133,6 +142,70 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
+var descripcion = document.getElementById('descripcionPregunta').value;
+var pregunta_a = document.getElementById('preguntaA').value;
+var pregunta_b = document.getElementById('preguntaB').value;
+var pregunta_c = document.getElementById('preguntaB').value;
+var imagen = document.getElementById('imagenPregunta').value;
+var tipo = "";
+var respuesta = document.getElementById('respuestaPregunta').value;
+var localizacion = document.getElementById('localizacionPregunta').value;
+
+document.getElementById("localizacionPregunta").addEventListener("change", e => {
+  
+  JSONPregunta = {
+    "descripcionPregunta":document.getElementById('descripcionPregunta').value,
+    "preguntaA":document.getElementById('preguntaA').value,
+    "preguntaB":document.getElementById('preguntaB').value,
+    "preguntaC":document.getElementById('preguntaC').value,
+    "imagenPregunta":document.getElementById('imagenPregunta').value,
+    "tipoPregunta":tipo,
+    "respuestaPregunta":document.getElementById('respuestaPregunta').value,
+    "localizacionPregunta":document.getElementById('localizacionPregunta').value
+  };
+
+  console.log(JSONPregunta["localizacionPregunta"]);
+
+  console.log(JSONPregunta["localizacionPregunta"] != "");
+  
+  esta =false;
+
+  for (i=0; i < listaPreguntas.length;i++){
+    console.log(listaPreguntas);
+    if(listaPreguntas[i]["localizacionPregunta"] == JSONPregunta["localizacionPregunta"]){
+      document.getElementById('descripcionPregunta').innerHTML=document.getElementById('descripcionPregunta').value;
+      document.getElementById('preguntaA').innerHTML=document.getElementById('preguntaA').value;
+      document.getElementById('preguntaB').innerHTML=document.getElementById('preguntaB').value;
+      document.getElementById('preguntaC').innerHTML=document.getElementById('preguntaC').value;
+      document.getElementById('imagenPregunta').innerHTML=""; 
+      esta = true;
+      break;
+    }
+    
+  }
+
+  if (!esta){
+    listaPreguntas.push(JSONPregunta);
+    document.getElementById('descripcionPregunta').value="";
+    document.getElementById('preguntaA').value="";
+    document.getElementById('preguntaB').value="";
+    document.getElementById('preguntaC').value="";
+    document.getElementById('imagenPregunta').value="";
+  }
+  /*if (JSONPregunta[localizacionPregunta] != ""){
+    
+  }
+  console.log(JSONPregunta);
+
+  for (i=0; i < listaPreguntas.length;i++){
+    console.log(listaPreguntas[0]);
+    if(listaPreguntas[i][localizacionPregunta] == document.getElementById('localizacionPregunta').value){
+      
+    }
+  }*/
+
+});
+
 function recogerYEnviar(){
   var difi;
   for(i=0;i<document.getElementById('dificultad').getElementsByTagName("input").length;i++){
@@ -167,5 +240,7 @@ function recogerYEnviar(){
     .catch(function(err) {
         console.error(err);
     });
+
+  
 
 }
