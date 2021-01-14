@@ -13,6 +13,7 @@ body{
   padding: 40px;
   width: 70%;
   min-width: 300px;
+  margin-top: 100px;
 }
 
 /* Style the input fields */
@@ -84,7 +85,6 @@ input[type="radio"]:checked ~ label {
 
 #mapid { 
   height: 450px;
-  margin-top: 100px;
   padding: 30px;
   margin-bottom: 20px;
   z-index: 2;
@@ -103,6 +103,16 @@ input[type="radio"]:checked ~ label {
   z-index: 1;
 }
 
+.algolia-places{
+  width: 85%;
+}
+
+#botonBuscar{
+  float: right;
+  width: 15%;
+  height: 40px;
+}
+
 #searchBar{
   height: 30%;
   padding-bottom: 5px;
@@ -114,5 +124,18 @@ input[type="radio"]:checked ~ label {
 
 #container{
   background-color: #5CA4BC;
+}
+
+#localizacionesDeRuta{
+  background-color: #f1f1f1;
+}
+
+#pregunta{
+  background-color: #a3d883;
+  margin-left: 15%;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+  margin-top: 100px;
 }
 

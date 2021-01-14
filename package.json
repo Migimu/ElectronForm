@@ -10,6 +10,7 @@
     "start": "electron ."
   },
   "dependencies": {
+    "jquery": "^3.5.1",
     "mongoose": "^5.11.11"
   }
 }

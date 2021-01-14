@@ -1,4 +1,6 @@
 //import L from 'leaflet';
+window.$ = window.jQuery = require('jquery');
+
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
@@ -15,6 +17,8 @@ var latlang;
 var lugar;
 var localizaciones = [];
 var listaPreguntas = [];
+var numLocalizaciones = 0;
+var listaMarker = [];
 
 var placesAutocomplete = places({
   appId: 'plOJC0RKIYMV',
@@ -23,34 +27,56 @@ var placesAutocomplete = places({
   templates: {
     value: function(suggestion) {
         map.setView([suggestion.latlng.lat,suggestion.latlng.lng],15);
-        latlang = suggestion;
-        lugar = suggestion.name;
     }
   },
+  });
+
+  placesAutocomplete.on('change', e => {
+    map.setView([e.suggestion.latlng.lat,e.suggestion.latlng.lng],15);
+    console.log(e.suggestion.latlng);
+    latlang = e.suggestion.latlng;
+    lugar = e.suggestion.name;
+    $('#nombreLocalizacion').text(lugar);
   });
 
   function datos(){
 
   }
-
+  
   function nuevaLocalizacion(){
-    localizaciones.push([latlang.latlng.lat,latlang.latlng.lng]);
+    localizaciones.push([latlang.lat,latlang.lng]);
+    console.log(localizaciones);
     for (i= 0 ; localizaciones.length>i;i++){
-      marker = new L.marker(localizaciones[i]).addTo(map);
-      L.marker([51.5, -0.09]).addTo(map)
-    .bindPopup('Localizacion '+(i+1))
-    .openPopup();
+      marker = new L.marker(localizaciones[i]);
+      map.addLayer(marker);
+      marker.bindPopup('Localizacion '+(i+1)).openPopup();
+    
+    listaMarker.push(marker);
     }
 
-    var option = document.createElement("option");
-    option.text = lugar;
-    option.value = lugar;
-    var select = document.getElementById("localizacionPregunta");
-    select.appendChild(option);
-    
+
+    $('#localizacionesDeRuta').append("<tr id='"+numLocalizaciones+"'><th scope='row'>"+lugar+"</th><td><Button type='button' onclick=borrar('"+numLocalizaciones+"')><em class='fas fa-eraser'></em></Button><Button onclick=editar('"+numLocalizaciones+"') type='button'><a href='pregunta.html' class='fas fa-edit'></a></Button></td></tr>");
+    numLocalizaciones++;
   }
 
+function borrar(sitio){
+  console.log('#'+sitio)
+  $('#'+sitio).remove();
+  numLocalizaciones--;
+  console.log(listaMarker.splice(sitio, 1));
+  map.removeLayer(listaMarker.splice(sitio, 1))
 
+}
+
+function editar(sitio){
+  $("form div").hide();
+  $('#pregunta').show();
+}
+
+function salirEditar(){
+  window.location.href = 'index.html';
+
+}
 
 function showTab(n) {
   // This function will display the specified tab of the form ...
@@ -142,14 +168,7 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-var descripcion = document.getElementById('descripcionPregunta').value;
-var pregunta_a = document.getElementById('preguntaA').value;
-var pregunta_b = document.getElementById('preguntaB').value;
-var pregunta_c = document.getElementById('preguntaB').value;
-var imagen = document.getElementById('imagenPregunta').value;
-var tipo = "";
-var respuesta = document.getElementById('respuestaPregunta').value;
-var localizacion = document.getElementById('localizacionPregunta').value;
+/*var localizacion = document.getElementById('localizacionPregunta').value;
 
 document.getElementById("localizacionPregunta").addEventListener("change", e => {
   
@@ -192,19 +211,8 @@ document.getElementById("localizacionPregunta").addEventListener("change", e => 
     document.getElementById('preguntaC').value="";
     document.getElementById('imagenPregunta').value="";
   }
-  /*if (JSONPregunta[localizacionPregunta] != ""){
-    
-  }
-  console.log(JSONPregunta);
 
-  for (i=0; i < listaPreguntas.length;i++){
-    console.log(listaPreguntas[0]);
-    if(listaPreguntas[i][localizacionPregunta] == document.getElementById('localizacionPregunta').value){
-      
-    }
-  }*/
-
-});
+});*/
 
 function recogerYEnviar(){
   var difi;
