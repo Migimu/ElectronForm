@@ -39,19 +39,26 @@ var placesAutocomplete = places({
     $('#nombreLocalizacion').text(lugar);
   });
 
-  function datos(){
-
+  function onMapClick(e) {
+    latlang = e.latlng;
+    lugar = e.name;
+    $('#nombreLocalizacion').text(lugar);
+    nuevaLocalizacion();
   }
+
+  map.on('click', onMapClick);
   
   function nuevaLocalizacion(){
     localizaciones.push([latlang.lat,latlang.lng]);
     console.log(localizaciones);
+
+    marker = new L.marker(localizaciones[numLocalizaciones]);
+    map.addLayer(marker);
+    marker.bindPopup('Localizacion '+(numLocalizaciones+1)).openPopup();
+
     for (i= 0 ; localizaciones.length>i;i++){
-      marker = new L.marker(localizaciones[i]);
-      map.addLayer(marker);
-      marker.bindPopup('Localizacion '+(i+1)).openPopup();
-    
-    listaMarker.push(marker);
+      
+    //listaMarker.push(marker);
     }
 
     /*****NUEVA FILA TABLA*****/
@@ -112,9 +119,14 @@ function pestana(num){
 function borrar(sitio){
   console.log('#'+sitio)
   $('#'+sitio).remove();
+  $('#div'+sitio).remove();
   numLocalizaciones--;
-  console.log(listaMarker.splice(sitio, 1));
-  map.removeLayer(listaMarker.splice(sitio, 1))
+  console.log(listaMarker.splice(sitio-1, 1));
+  map.removeLayer(listaMarker.splice(sitio-1, 1));
+  localizaciones.splice(sitio-1,1);
+  console.log(localizaciones);
+  console.log(listaMarker);
+  
 
 }
 

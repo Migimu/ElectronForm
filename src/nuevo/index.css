@@ -162,3 +162,8 @@ input[type="radio"]:checked ~ label {
   border-width: 0px;
   border-color: #6c757d;
 }
+
+#Pregunta, #Localizacion{
+  display: contents;
+
+}
