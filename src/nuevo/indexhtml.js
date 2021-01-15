@@ -54,10 +54,60 @@ var placesAutocomplete = places({
     listaMarker.push(marker);
     }
 
+    /*****NUEVA FILA TABLA*****/
 
-    $('#localizacionesDeRuta').append("<tr id='"+numLocalizaciones+"'><th scope='row'>"+lugar+"</th><td><Button type='button' onclick=borrar('"+numLocalizaciones+"')><em class='fas fa-eraser'></em></Button><Button onclick=editar('"+numLocalizaciones+"') type='button'><a href='pregunta.html' class='fas fa-edit'></a></Button></td></tr>");
+    $('#localizacionesDeRuta').append("<tr id='"+numLocalizaciones+"'></tr>");
+
+    $('#localizacionesDeRuta #'+numLocalizaciones).append("<th scope='row'>"+lugar+"</th><td></td>");
+
+    $('#localizacionesDeRuta #'+numLocalizaciones+" td").append("<Button type='button' onclick=borrar('"+numLocalizaciones+"')><em class='fas fa-eraser'></em></Button>");
+
+
+    /*****NUEVO QUESTIONARIO*****/
+
+    //NOMBRE LOCALIZACION
+
+    $('#accordeonPreguntas').append("<div id='div"+numLocalizaciones+"'><h1 onclick='pestana("+numLocalizaciones+")'>"+lugar+"</h1></div>");    
+    
+    $("#div"+numLocalizaciones).append("<div class='subdiv'> </div>");
+
+    //ESCRBIR DESCRIPCION
+
+    $("#div"+numLocalizaciones+" .subdiv").append("Descripcion: <p><textarea id='descripcionPregunta' placeholder='Descripcion' name='' id='' style='resize: none; overflow: auto;'></textarea></p> ")
+
+    //ESCRBIR PREGUNTA A
+
+    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta A:<p><input id='preguntaA' placeholder='Pregunta A' oninput=''></p> ");
+
+    //ESCRBIR PREGUNTA B
+
+    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta B:<p><input id='preguntaB' placeholder='Pregunta B' oninput=''></p>");
+
+    //ESCRBIR PREGUNTA C
+
+    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta C:<p><input id='preguntaC' placeholder='Pregunta C' oninput=''></p> ");
+
+    //ESCRBIR IMAGEN
+
+    $("#div"+numLocalizaciones+" .subdiv").append("Imagen:<p><input id='imagenPregunta' type='file'></p>");
+
+    //ELEGIR TIPO PREGUNTA
+    
+    $("#div"+numLocalizaciones+" .subdiv").append("<p><input type='radio' name='tipo' id='Pregunta'>    <label for='Pregunta'>Pregunta</label></p>");
+
+    $("#div"+numLocalizaciones+" .subdiv").append("<p><input type='radio' name='tipo' id='Localizacion'>    <label for='Localizacion'>Localizacion</label></p>");
+
+    //ELEGIR RESPUESTA CORRECTA
+
+    $("#div"+numLocalizaciones+" .subdiv").append("Respuesta correcta:    <p><select id='respuestaPregunta' class='form-select' aria-label='Default select example'>      <option selected>Open this select menu</option>      <option value='1'>A</option>      <option value='2'>B</option>      <option value='3'>C</option>  </select></p>");
+
     numLocalizaciones++;
   }
+
+
+function pestana(num){
+  $("#div"+num+" .subdiv").toggle(500);
+}
 
 function borrar(sitio){
   console.log('#'+sitio)

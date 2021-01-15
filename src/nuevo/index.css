@@ -139,3 +139,26 @@ input[type="radio"]:checked ~ label {
   margin-top: 100px;
 }
 
+#accordeonPreguntas div{
+  background-color: #a3d883;
+  margin-left: 15%;
+  padding: 20px;
+  width: 70%;
+  min-width: 300px;
+  margin-top: 10px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #6c757d;
+}
+
+#accordeonPreguntas h1{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#accordeonPreguntas .subdiv{
+  font-size: 17px;
+  border-style: none;
+  border-width: 0px;
+  border-color: #6c757d;
+}
