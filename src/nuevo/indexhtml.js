@@ -80,40 +80,45 @@ var placesAutocomplete = places({
 
     //ESCRBIR DESCRIPCION
 
-    $("#div"+numLocalizaciones+" .subdiv").append("Descripcion: <p><textarea id='descripcionPregunta' placeholder='Descripcion' name='' id='' style='resize: none; overflow: auto;'></textarea></p> ")
+    $("#div"+numLocalizaciones+" .subdiv").append("Descripcion: <p><textarea id='descripcionPregunta"+numLocalizaciones+"' placeholder='Descripcion' name='' id='' style='resize: none; overflow: auto;'></textarea></p> ")
 
     //ESCRBIR PREGUNTA A
 
-    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta A:<p><input id='preguntaA' placeholder='Pregunta A' oninput=''></p> ");
+    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta A:<p><input id='preguntaA"+numLocalizaciones+"' placeholder='Pregunta A' oninput=''></p> ");
 
     //ESCRBIR PREGUNTA B
 
-    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta B:<p><input id='preguntaB' placeholder='Pregunta B' oninput=''></p>");
+    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta B:<p><input id='preguntaB"+numLocalizaciones+"' placeholder='Pregunta B' oninput=''></p>");
 
     //ESCRBIR PREGUNTA C
 
-    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta C:<p><input id='preguntaC' placeholder='Pregunta C' oninput=''></p> ");
+    $("#div"+numLocalizaciones+" .subdiv").append("Pregunta C:<p><input id='preguntaC"+numLocalizaciones+"' placeholder='Pregunta C' oninput=''></p> ");
 
     //ESCRBIR IMAGEN
 
-    $("#div"+numLocalizaciones+" .subdiv").append("Imagen:<p><input id='imagenPregunta' type='file'></p>");
+    $("#div"+numLocalizaciones+" .subdiv").append("Imagen:<p><input id='imagenPregunta"+numLocalizaciones+"' type='file'></p>");
 
     //ELEGIR TIPO PREGUNTA
     
-    $("#div"+numLocalizaciones+" .subdiv").append("<p><input type='radio' name='tipo' id='Pregunta'>    <label for='Pregunta'>Pregunta</label></p>");
+    $("#div"+numLocalizaciones+" .subdiv").append("<p><input type='radio' name='tipo' id='Pregunta"+numLocalizaciones+"'>    <label for='Pregunta'>Pregunta</label></p>");
 
-    $("#div"+numLocalizaciones+" .subdiv").append("<p><input type='radio' name='tipo' id='Localizacion'>    <label for='Localizacion'>Localizacion</label></p>");
+    $("#div"+numLocalizaciones+" .subdiv").append("<p><input type='radio' name='tipo' id='Localizacion"+numLocalizaciones+"'>    <label for='Localizacion'>Localizacion</label></p>");
 
     //ELEGIR RESPUESTA CORRECTA
 
-    $("#div"+numLocalizaciones+" .subdiv").append("Respuesta correcta:    <p><select id='respuestaPregunta' class='form-select' aria-label='Default select example'>      <option selected>Open this select menu</option>      <option value='1'>A</option>      <option value='2'>B</option>      <option value='3'>C</option>  </select></p>");
+    $("#div"+numLocalizaciones+" .subdiv").append("Respuesta correcta:    <p><select id='respuestaPregunta"+numLocalizaciones+"' class='form-select' aria-label='Default select example'>      <option selected>Open this select menu</option>      <option value='1'>A</option>      <option value='2'>B</option>      <option value='3'>C</option>  </select></p>");
+
+    $("#div"+numLocalizaciones+" .subdiv").hide();
+    $("#div0 .subdiv").show();
 
     numLocalizaciones++;
   }
 
 
 function pestana(num){
+  
   $("#div"+num+" .subdiv").toggle(500);
+  $(".subdiv").not("#div"+num+" .subdiv").hide(500);
 }
 
 function borrar(sitio){
@@ -230,69 +235,54 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-/*var localizacion = document.getElementById('localizacionPregunta').value;
-
-document.getElementById("localizacionPregunta").addEventListener("change", e => {
-  
-  JSONPregunta = {
-    "descripcionPregunta":document.getElementById('descripcionPregunta').value,
-    "preguntaA":document.getElementById('preguntaA').value,
-    "preguntaB":document.getElementById('preguntaB').value,
-    "preguntaC":document.getElementById('preguntaC').value,
-    "imagenPregunta":document.getElementById('imagenPregunta').value,
-    "tipoPregunta":tipo,
-    "respuestaPregunta":document.getElementById('respuestaPregunta').value,
-    "localizacionPregunta":document.getElementById('localizacionPregunta').value
-  };
-
-  console.log(JSONPregunta["localizacionPregunta"]);
-
-  console.log(JSONPregunta["localizacionPregunta"] != "");
-  
-  esta =false;
-
-  for (i=0; i < listaPreguntas.length;i++){
-    console.log(listaPreguntas);
-    if(listaPreguntas[i]["localizacionPregunta"] == JSONPregunta["localizacionPregunta"]){
-      document.getElementById('descripcionPregunta').innerHTML=document.getElementById('descripcionPregunta').value;
-      document.getElementById('preguntaA').innerHTML=document.getElementById('preguntaA').value;
-      document.getElementById('preguntaB').innerHTML=document.getElementById('preguntaB').value;
-      document.getElementById('preguntaC').innerHTML=document.getElementById('preguntaC').value;
-      document.getElementById('imagenPregunta').innerHTML=""; 
-      esta = true;
-      break;
-    }
-    
-  }
-
-  if (!esta){
-    listaPreguntas.push(JSONPregunta);
-    document.getElementById('descripcionPregunta').value="";
-    document.getElementById('preguntaA').value="";
-    document.getElementById('preguntaB').value="";
-    document.getElementById('preguntaC').value="";
-    document.getElementById('imagenPregunta').value="";
-  }
-
-});*/
 
 function recogerYEnviar(){
   var difi;
-  for(i=0;i<document.getElementById('dificultad').getElementsByTagName("input").length;i++){
-    if(document.getElementById('dificultad').getElementsByTagName("input")[i].checked){
-      difi = document.getElementById('dificultad').getElementsByTagName("input")[i].value;
+  for(i=0;i<$('#dificultad input').length;i++){
+    if($('#dificultad input')[i].checked){
+      difi = $('#dificultad input')[i].value;
     }
   }
 
   var JSONRuta =  {
-  "nombreRuta" : document.getElementById('nombreRuta').value,
-  "descripcionRuta" : document.getElementById('descripcionRuta').value,
-  "imagenRuta" : document.getElementById('imagenRuta').value,
-  "ciudadRuta" : document.getElementById('ciudadRuta').value,
-  "transporteRuta" : document.getElementById('transporteRuta').value,
-  "tematicaRuta" : document.getElementById('tematicaRuta').value,
+  "nombreRuta" : $('#nombreRuta').val(),
+  "descripcionRuta" : $('#descripcionRuta').val(),
+  "imagenRuta" : $('#imagenRuta').val(),
+  "ciudadRuta" : $('#ciudadRuta').val(),
+  "transporteRuta" : $('#transporteRuta').val(),
+  "tematicaRuta" : $('#tematicaRuta').val(),
   "dificultadRuta":difi};
   
+  var localizacionesJSON = [];
+  console.log($('#accordeonPreguntas div').even().length);
+  for (i = 0; i < $('#accordeonPreguntas div').even().length; i++){
+    console.log('#div'+i+" #descripcionPregunta"+i);
+    var JSONPregunta = {
+      "descripcionPregunta" :  $('#div'+i+" #descripcionPregunta"+i).val(),
+      "preguntaA" : $('#div'+i+" #preguntaA"+i).val(),
+      "preguntaB" : $('#div'+i+" #preguntaB"+i).val(),
+      "preguntaC" : $('#div'+i+" #preguntaC"+i).val(),
+      "imagenPregunta" : $('#div'+i+" #imagenPregunta").val(),
+      "tipoPregunta" : $('#div'+i+" #tipoPregunta"+i).val(),
+      "respuestaCorrecta" : $('#div'+i+" #respuestaCorrecta"+i).val(),
+    }
+
+    var JSONLocalizacion = {
+      "nombre":$('#accordeonPreguntas div'+i).text(),
+      "latitud":localizaciones[i][0],
+      "longitud":localizaciones[i][1],
+      "pista":"aggd",
+      "oculta":true,
+      "pregunta":JSONPregunta,
+    }
+
+    localizacionesJSON.push(JSONLocalizacion);
+    
+  }
+
+  console.log(localizacionesJSON);
+    
+
   //Cambiar direccion por la de la api
   fetch('https://httpbin.org/post',{
         method: 'POST',
