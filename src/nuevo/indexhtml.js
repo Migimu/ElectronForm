@@ -16,7 +16,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 var latlang;
 var lugar;
 var localizaciones = [];
-var listaPreguntas = [];
 var numLocalizaciones = 0;
 var listaMarker = [];
 
@@ -56,10 +55,8 @@ var placesAutocomplete = places({
     map.addLayer(marker);
     marker.bindPopup('Localizacion '+(numLocalizaciones+1)).openPopup();
 
-    for (i= 0 ; localizaciones.length>i;i++){
-      
-    //listaMarker.push(marker);
-    }
+    listaMarker.push(marker);
+
 
     /*****NUEVA FILA TABLA*****/
 
@@ -122,13 +119,19 @@ function pestana(num){
 }
 
 function borrar(sitio){
-  console.log('#'+sitio)
+
   $('#'+sitio).remove();
   $('#div'+sitio).remove();
+
   numLocalizaciones--;
-  console.log(listaMarker.splice(sitio-1, 1));
-  map.removeLayer(listaMarker.splice(sitio-1, 1));
-  localizaciones.splice(sitio-1,1);
+  map.removeLayer(listaMarker[sitio]);
+
+  listaMarker.splice(sitio, 1);
+
+  localizaciones.splice(sitio,1);
+  
+  console.log(sitio);
+
   console.log(localizaciones);
   console.log(listaMarker);
   
